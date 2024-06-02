@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var isPresentedAlert: Bool = false
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Button(action: {
+                isPresentedAlert.toggle()
+            }, label: {
+                Text("Trigger alert".capitalized)
+            })
         }
         .padding()
     }
