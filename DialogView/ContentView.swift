@@ -12,14 +12,20 @@ struct ContentView: View {
     @State private var isPresentedAlert: Bool = false
     
     var body: some View {
-        VStack {
+        ZStack {
             Button(action: {
                 isPresentedAlert.toggle()
             }, label: {
                 Text("Trigger alert".capitalized)
             })
+            
+            if isPresentedAlert {
+                DialogView(title: "ALERT",
+                           trailingButtonTapped: $isPresentedAlert) {
+                    Text("This is a alert description")
+                }
+            }
         }
-        .padding()
     }
 }
 

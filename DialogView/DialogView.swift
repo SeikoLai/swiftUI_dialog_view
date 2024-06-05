@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-struct DialogView<Content: View>: View {
-    @Environment(\.dismiss) var dismiss
-    
+struct DialogView<Content: View>: View {    
     var trailingButtonTapped: Binding<Bool>
     
     private let title: String
@@ -66,7 +64,7 @@ struct DialogView<Content: View>: View {
                 
                 HStack {
                     Button(action: {
-                        dismiss()
+                        trailingButtonTapped.wrappedValue.toggle()
                     }, label: {
                         Text(leadingButtonTitle)
                             .frame(maxWidth: .infinity)
@@ -89,41 +87,6 @@ struct DialogView<Content: View>: View {
             .padding(.horizontal, 40)
         }
         .zIndex(.greatestFiniteMagnitude)
-    }
-}
-
-struct DialogViewModifier: ViewModifier {
-    @Binding var isPresented: Bool
-    
-    var title: String
-    var titleFont: Font = .system(.title).monospaced()
-    var titleLineLimit: Int = 2
-    var leadingButtonTitle: String = "Cancel"
-    var leadingButtonTitleFont: Font = .system(.title3).monospaced()
-    var trailingButtonTitle: String = "Done"
-    var trailingButtonTitleFont: Font = .system(.title3).monospaced()
-    var trailingButtonTapped: Binding<Bool>
-    var contentLineLimit: Int = 5
-    var content: any View
-    
-    func body(content: Content) -> some View {
-        ZStack {
-            content
-            
-            if isPresented {
-                DialogView(title: title,
-                           titleFont: titleFont,
-                           titleLineLimit: titleLineLimit,
-                           leadingButtonTitle: leadingButtonTitle,
-                           leadingButtonTitleFont: leadingButtonTitleFont,
-                           trailingButtonTitle: trailingButtonTitle,
-                           trailingButtonTitleFont: trailingButtonTitleFont,
-                           trailingButtonTapped: $isPresented,
-                           contentLineLimit: contentLineLimit) {
-                    content
-                }
-            }
-        }
     }
 }
 
